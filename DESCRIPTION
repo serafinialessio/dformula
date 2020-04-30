@@ -1,0 +1,19 @@
+Package: dformula
+Type: Package
+Version: 0.1
+Date: 2020-04-30
+Title: Data manipulation using formula
+Description: A tool for manipulating data using the generic function formula.  
+Authors@R: c(person("Alessio", "Serafini", role = c("aut", "cre"),
+                    comment = c(ORCID = "0000-0002-8579-5695"),
+                    email = "srf.alessio@gmail.com"))
+Depends: R (>= 3.4)
+Imports: utils, stats, formula.tools(>= 1.7.1), magrittr(>= 1.5)
+VignetteBuilder: knitr
+License: GPL (>= 2)
+Repository: CRAN
+URL: https://github.com/serafinialessio/dformula
+BugReports: https://github.com/serafinialessio/dformula/issues
+NeedsCompilation: no
+Encoding: UTF-8
+LazyData: true

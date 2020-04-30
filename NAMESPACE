@@ -1,0 +1,11 @@
+#exportPattern("^[[:alpha:]]+")
+
+
+
+importFrom("utils", "packageVersion")
+
+import("stats", "formula.tools", "magrittr")
+
+export("add","remove","rename","select","transform")
+
+#export("variable_create")
