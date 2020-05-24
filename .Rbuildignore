@@ -1,6 +1,7 @@
 .DS_Store
 .Rhistory
 .travis.yml
+.circleci
 ^misc$
 aux$
 log$

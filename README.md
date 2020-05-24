@@ -1,4 +1,4 @@
-# dformula: data manipulation using R formula
+# dformula: data manipulation using R `formula`
 
 [![Build Status](https://travis-ci.org/dataallaround/dformula.svg?branch=master)](https://travis-ci.org/dataallaround/dformula)
 [![CRAN](http://www.r-pkg.org/badges/version/dformula)](https://cran.r-project.org/package=dformula) 
