@@ -1,10 +1,39 @@
-# dformula
+# dformula: data manipulation using R `formula`
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/dformula)](https://cran.r-project.org/package=redata)
-[![CRAN\_MonthlyDownloads](http://cranlogs.r-pkg.org/badges/dformula)](https://cran.r-project.org/package=dformula)
-[![Generic badge](https://img.shields.io/github/downloads/dataallaround/dformula/total)](https://shields.io/)
-<!---
-[![HitCount](http://hits.dwyl.com/serafinialessio/dformula.svg)](http://hits.dwyl.com/serafinialessio/dformula)
--->
-A tool for manipulating data using the generic function formula.
+
+[![CRAN](http://www.r-pkg.org/badges/version/dformula)](https://cran.r-project.org/package=dformula) 
+[![Downloads](http://cranlogs.r-pkg.org/badges/dformula?color=brightgreen)](http://www.r-pkg.org/pkg/dformula)
+
+A tool for manipulating data using the generic R function `formula`.
+
+
+Installation
+------------
+
+
+```r
+install.packages("dformula")
+```
+
+Development verison
+-------------------
+
+```r
+library(remotes)
+install_github("dataallaround/dformula")
+```
+
+Usage
+------
+
+
+```r
+library(dformula)
+```
+
+
+Vignettes 
+-----
+
+[An overview](https://cran.r-project.org/package=dformula/vignettes/An-overview.html)
 

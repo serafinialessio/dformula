@@ -1,5 +1,6 @@
 
-transform <- function(from, formula, names = NULL, na.remove = FALSE, convert_logic = TRUE, ...)
+transform <- function(from, formula, as = NULL,
+                      na.remove = FALSE, logic_convert = TRUE, ...)
 {
   if(!inherits(from, "data.frame"))
   {
@@ -46,7 +47,7 @@ transform <- function(from, formula, names = NULL, na.remove = FALSE, convert_lo
   # from_new <- as.matrix(from_new)
   from_new <- as.matrix(formula$model_frame)
 
-  if(isTRUE(convert_logic))
+  if(isTRUE(logic_convert))
   {
     tp <- sapply(1:ncol(from_new), function(x) typeof(from_new[,x]))
     from_new[,which(tp == "logical")] <- as.numeric(from_new[,which(tp == "logical")])
@@ -60,16 +61,16 @@ transform <- function(from, formula, names = NULL, na.remove = FALSE, convert_lo
 
   from[,cnames %in% vNames] <- from_new[,, drop = TRUE]
 
-  if(is.null(names))
+  if(is.null(as))
   {
     colnames(from) <- cnames
   }else{
-    if(length(cnames) != names)
+    if(length(cnames) != as)
     {
       warning("lenght of names is different from the number of column of data")
-      names <- NULL
+      as <- NULL
     }
-    colnames(from) <- names
+    colnames(from) <- as
   }
 
 

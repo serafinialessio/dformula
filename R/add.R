@@ -1,7 +1,7 @@
 
-add <- function(from, formula, names = NULL,
+add <- function(from, formula, as = NULL,
                 position = c("right", "left"),
-                na.remove = FALSE, convert_logic = TRUE,...)
+                na.remove = FALSE, logic_convert = TRUE,...)
 {
 
   position <- match.arg(position, choices = eval(formals(add)$position))
@@ -31,7 +31,7 @@ add <- function(from, formula, names = NULL,
   #                         drop.unused.levels = FALSE, na.action = NULL,...)
   from_new <- as.matrix(formula$model_frame)
 
-  if(isTRUE(convert_logic))
+  if(isTRUE(logic_convert))
   {
     tp <- sapply(1:ncol(from_new), function(x) typeof(from_new[,x]))
     from_new[,which(tp == "logical")] <- as.numeric(from_new[,which(tp == "logical")])
@@ -44,17 +44,17 @@ add <- function(from, formula, names = NULL,
 
   nChanges <- ncol(from_new)
 
-  if(is.null(names))
+  if(is.null(as))
   {
-    names <- paste0("Var.",1:nChanges)
+    as <- paste0("Var.",1:nChanges)
 
-  }else if(nChanges != length(names)){
+  }else if(nChanges != length(as)){
 
-    warning(paste("The new variable are", nChanges, " and new names are ", length(names)),call. = FALSE)
-    names <- paste0("Var.",1:nChanges)
+    warning(paste("The new variable are", nChanges, " and new names are ", length(as)),call. = FALSE)
+    as <- paste0("Var.",1:nChanges)
   }
 
-  colnames(from_new) <- names
+  colnames(from_new) <- as
 
   if(position == "left")
   {

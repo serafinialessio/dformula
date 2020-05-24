@@ -5,20 +5,34 @@
 \description{Mutate input variables  using a formula.
 }
 \usage{
-transform(from, formula, names = NULL,
-          na.remove = FALSE, convert_logic = TRUE, ...)
+transform(from, formula, as = NULL,
+          na.remove = FALSE, logic_convert = TRUE, ...)
 }
 
 \arguments{
   \item{from}{a data.frame object with variables}
   \item{formula}{a formula indicating the operation to create new varibles. Look at the detail section for explanantion.}
-  \item{names}{a character vector with names of new variables.}
+  \item{as}{a character vector with names of new variables.}
   \item{na.remove}{a logical value indicating whether NA values should be removed.}
-\item{convert_logic}{logical value indicating if the new logical varaible are convertet to \code{0} or \code{1}}
+\item{logic_convert}{logical value indicating if the new logical varaible are converted to \code{0} or \code{1}}
   \item{\dots}{further arguments}
 }
 \details{
-If \code{na.remove} is set to \code{TRUE},  variables are mutated, and then the observation with missing are removed.
+
+The formula is composed of two part:
+
+\code{column_names ~ trasformed_variables}
+
+the left-hand side are the names of the column to transform, and the right-hand the operations applied to the selected columns, using the \code{I()} function.
+
+For example:
+
+\code{column_names1 + column_names2 ~ I(log(column_names1)) + I(column_names2/100)}
+
+the \code{column_names1} is mutated in \code{log(column_names1)} and \code{column_names2} is divided by 100.
+
+
+If \code{na.remove} is set to \code{TRUE},  variables are mutaded, and then the observation with missing are removed.
 }
 
 
@@ -30,10 +44,13 @@ Returns the original data.frame object with mutaded varaibles.
 
 \examples{
 
+data("airquality")
+dt <- airquality
+
 head(transform(from = dt, Ozone ~ I(Ozone-Ozone)))
 head(transform(from = dt, Ozone ~ log(Ozone)))
 head(transform(from = dt, Ozone ~ I(Ozone>5)))
-head(transform(from = dt, Ozone ~ I(Ozone>5), convert_logic = TRUE))
+head(transform(from = dt, Ozone ~ I(Ozone>5), logic_convert = TRUE))
 
 
 head(transform(from = dt,  ~ log()))

@@ -1,0 +1,336 @@
+---
+title: "An overview on *dformula*"
+output: 
+  rmarkdown::html_vignette:
+    keep_md: true 
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{An overview}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\usepackage[utf8]{inputenc}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, collapse = TRUE, 
+                      fig.width = 6, fig.height = 5, 
+                      message = FALSE, warning = FALSE)
+```
+
+## Introduction 
+
+**dformula** allows to easily modify, transform, add and extrapolate using the basic R formula. The operations on the data are the following:
+
+| Operation | Function|
+------------|------------|
+| Add new variables | `add()` |
+| Transform existing variables| `transform()`|
+| Rename existing variables | `rename()` |
+| Selection rows and columns | `select()`|
+| Removing row and column  | `remove`|
+------------------------------------------
+
+
+
+The formula is composed of two part:
+
+$$
+column\_names \sim new\_variables
+$$
+
+the right-hand side shows the names of the columns of the data and the left-hand side the transformation or the new variables to insert in the data.
+
+The `I()` is used in the right-hand side to indicate the type of transformation of the existing variable. In this function, we can insert logical statement, function implemented in R or user build function.
+
+For example:
+
+$$
+var\_name_1 + var\_name_2 \sim I(log(var\_name_1)) + I(var\_name_2 == "something")
+$$
+
+the two variable $var_name_1$ and $var_name_2$ are transformed in $log(var_name_1)$ or selected to be equal to $"something"$.
+
+In the same fashion of SQL, we have the `from` argument, the input data, and the `as` argument, the new name of the variables, after transformation, selection or addition.
+
+<br><br>
+
+The CRAN version can be loaded
+```{r, message = FALSE}
+library('dformula')
+```
+
+or the development version from GitHub:
+
+```{r, message = FALSE, eval=FALSE}
+remotes::install_github('dataallaround/dformula')
+```
+
+The data are available in the package will be used in this overview
+
+```{r}
+data("population_data")
+pop_data <- population_data
+```
+
+which describes the **Population** and **Area** of world countries. 
+
+```{r}
+str(pop_data)
+```
+
+
+
+## `Adding` variables 
+
+The `add()` function inserts new variables starting from the existing columns in the data. 
+
+Suppose we want to calculate population density and attach this to the original dataset
+
+```{r}
+new_pop <- add(from = pop_data, formula = ~ I(Population / Area))
+head(new_pop)
+```
+
+and give a name to this new variable
+
+```{r}
+new_pop <- add(from = pop_data, formula = ~ I(Population / Area), as = "pop_density")
+head(new_pop)
+```
+
+Multiple variable can be added with a single formula
+
+```{r}
+new_pop <- add(from = pop_data, formula = ~ I(Population / Area) + I(log(Area)))
+head(new_pop)
+```
+
+and with new names
+
+```{r}
+new_pop <- add(from = pop_data, formula = ~ I(Population / Area) + I(log(Area)), 
+               as = c("pop_density", "log_area"))
+head(new_pop)
+```
+
+If we have one transformation applied to a group of variables, we do not spicify the function multipe times
+
+```{r}
+new_pop <- add(from = pop_data, formula = Population + Area ~ log())
+head(new_pop)
+```
+
+and with names
+
+```{r}
+new_pop <- add(from = pop_data, formula = Population + Area ~ log(),
+               as = c("log_pop", "log_area"))
+head(new_pop)
+```
+
+Suppose we want tp add a numerical **id** for the countries at the beginning of the dataset, using the `position` argument
+
+```{r}
+new_pop <- add(from = pop_data, 
+               formula = ~ I(1:nrow(new_pop)), 
+               position = "left", as = "id")
+head(new_pop)
+```
+
+
+We can also add a constant variable, for example the year of the observation
+
+```{r}
+new_pop <- add(from = pop_data, formula = ~ C("2020"), position = "left")
+head(new_pop)
+```
+
+or both
+
+```{r}
+new_pop <- add(from = pop_data, 
+               formula = ~ I(1:nrow(new_pop)) + C("2020"), 
+               position = "left", as = c("ids", "year"))
+head(new_pop)
+```
+
+The `C()` construct, add a constant for all the rows
+
+
+
+We can be interested in having a dummy variable, i.e. a variable equal to $1$ if some event happen or $0$ otherwise. For example, we suppose to build a dummy variables with the most populated countries, for example countries with more than $100$ million of people.
+
+```{r}
+new_pop <- add(from = pop_data, formula =  ~ I(Population > 100000000))
+head(new_pop)
+```
+
+or two variables one with the most populated countries and the other with the biggest extended countries 
+
+```{r}
+new_pop <- add(from = pop_data, 
+               formula =  ~ I(Population > 100000000) + I(Area > 8000000))
+head(new_pop)
+
+```
+
+or a variable indicating the most populated and the biggest countries togheter
+
+```{r}
+new_pop <- add(from = pop_data, 
+               formula =  ~ I(Population > 100000000 & Area > 8000000))
+head(new_pop)
+
+```
+
+If we want obtain a boolean vector, as an interrogation,  setting to `TRUE` the argument `logic_convert` the unction will return a boolean vector
+
+```{r}
+new_pop <- add(from = pop_data, 
+               formula =  ~ I(Population > 100000000), 
+               logic_convert = FALSE, as = "most_populated")
+head(new_pop)
+```
+
+## `Transform` variables 
+
+
+The `transform()` function modifies existing variables in the dataset. 
+
+Suppose we want to change the scale on the **Population**
+
+```{r}
+new_pop <- transform(from = pop_data, 
+                     formula =  Population ~ I(Population/10000))
+head(new_pop)
+```
+
+or we want a logarithmic transformation, renaming the variable
+
+```{r}
+new_pop <- transform(from = pop_data, 
+                     formula =  Population ~ I(log(Population)), 
+                     as = "log_pop")
+head(new_pop)
+```
+
+With a single formula, multiple variables can be transformed, as showed before.
+
+```{r}
+new_pop <- transform(from = pop_data, 
+                     formula =  Population  + Area~ I(log()))
+head(new_pop)
+```
+
+We can also transformed multiple varaible with multiple transformation 
+
+```{r}
+new_pop <- transform(from = pop_data, 
+                     formula =  Population + Area ~ I(Population > 100000000) + I(log(Area)))
+head(new_pop)
+```
+
+
+
+## `Rename` varaibles
+
+The `rename()` function may be used to change names of existing variables, for example
+
+```{r}
+new_pop <- rename(from = pop_data, formula =  Population  ~ pop )
+head(new_pop)
+
+```
+
+or multiple variables
+
+```{r}
+new_pop <- rename(from = pop_data, formula =  Population  + Area ~ pop + area)
+head(new_pop)
+```
+
+## `Select` variables and rows
+
+In the same fashion of SQL, the `select()` function first select the rows, given a statement, and then shows the select variables.
+
+The first part of the formula are the columns to select, as the previous functions, and the left-hand side of the formula, the condition part, will select the rows.
+
+Suppose to want to select only the most populated countries
+
+```{r}
+new_pop <- select(from = pop_data, 
+                  formula =  . ~ I(Population > 100000000))
+head(new_pop)
+```
+
+you can also add `.` to returns all variables instead of nothing. 
+
+We want only the name of the most populated countries
+
+```{r}
+new_pop <- select(from = pop_data, 
+                  formula =  Country ~ I(Population > 100000000))
+head(new_pop)
+```
+
+We might be interest in only the most populated and biggest countries
+
+```{r}
+new_pop <- select(from = pop_data, 
+               formula = . ~ I(Population > 100000000 & Area > 8000000)) 
+head(new_pop)
+```
+
+
+or both
+
+```{r}
+new_pop <- select(from = pop_data, 
+               formula = ~ I(Population > 100000000 | Area > 8000000)) 
+head(new_pop)
+```
+
+by selecting only the names 
+
+```{r}
+new_pop <- select(from = pop_data, 
+               formula = Country ~ I(Population > 100000000 | Area > 8000000)) 
+head(new_pop)
+```
+
+
+## `Remove` varaibles
+
+The `remove()` function has the same syntax of `select()` function, but now the rows and columns will be removed.
+
+
+
+```{r}
+new_pop <- remove(from = pop_data, 
+                  formula =  Area ~ I(Population > 100000000))
+head(new_pop)
+```
+
+
+## Missing values 
+
+
+In all the functions, except for `rename`, the argument `na.remove`, remove all the rows with missing values, after adding, transforming or selecting the rows.
+
+The `remove` function, can be employed to remove all the rows with at least a missing observation,
+
+```{r}
+data("airquality")
+dt <- airquality
+
+dt_new <- remove(from = dt,formula = .~., na.remove = TRUE)
+head(dt_new)
+```
+
+
+If we are interested to focus on the observation with missing values,  the `na.return = TRUE` arguments  of `select` function, will return only the incomplete rows after the selection
+
+```{r}
+dt_new <- select(from = dt,formula = ~ I(Temp > 50), na.return = TRUE)
+head(dt_new)
+```
+

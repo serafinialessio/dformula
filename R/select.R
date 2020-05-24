@@ -1,4 +1,5 @@
-select <- function(from, formula, na.remove = FALSE, ...)
+select <- function(from, formula = .~., as = NULL,
+                   na.remove = FALSE, na.return = FALSE, ...)
 {
   if(!inherits(from, "data.frame"))
   {
@@ -27,12 +28,41 @@ select <- function(from, formula, na.remove = FALSE, ...)
   if(!is.null(formula$getsVars))
   {
     from <- from[from_new,formula$getsVars, drop = FALSE]
+  }else{
+
+    from <- from[from_new, ,drop = FALSE]
+
   }
 
-  if(isTRUE(na.remove))
-  {
-    from <- na.omit(from)
+  nChanges <- ncol(from_new)
+
+  if(!is.null(as)){
+
+    if(nChanges != length(as))
+    {
+      warning(paste("The new variable are", nChanges, " and new names are ", length(as)),call. = FALSE)
+      as <- NULL
+    }
+
+    colnames(from_new) <- as
+
   }
+
+
+  if(isTRUE(na.return))
+  {
+
+    from <- from[!complete.cases(from),]
+
+  }else{
+
+    if(isTRUE(na.remove))
+    {
+      from <- na.omit(from)
+    }
+
+  }
+
 
 
   class(from) <- class(from)
@@ -40,62 +70,3 @@ select <- function(from, formula, na.remove = FALSE, ...)
 
 }
 
-
-
-# remove <- function(from, formula, na.remove = FALSE, na.exclude = FALSE, ...)
-# {
-#
-#   if(!inherits(from, "data.frame"))
-#   {
-#     from <- data.frame(from)
-#   }
-#
-#   if(!inherits(formula, "formula"))
-#   {
-#     stop("formula must be a formula object")
-#   }
-#
-#   if(isTRUE(na.remove))
-#   {
-#     na.remove <- na.omit
-#
-#   }else if(isFALSE(na.remove))
-#   {
-#     na.remove <- NULL
-#   }
-#
-#   formula <- check_formula(formula = formula)
-#
-#   if(is.null(formula$getsVars) & any(rhs(formula$getsTransf) == "."))
-#   {
-#     warning("'.' are not allowd in the formula. The original data are returned.")
-#
-#   }else{
-#     from_new <- model.frame(formula = formula$getsTransf, data = from,
-#                             drop.unused.levels = FALSE, na.action = na.remove,...)
-#
-#     from_new <- unlist(!from_new)
-#
-#     if(isTRUE(na.exclude))
-#     {
-#       from_new[is.na(from_new)] <- FALSE
-#     }
-#
-#     if(!is.null(formula$getsVars))
-#     {
-#       from <- from[from_new,!(colnames(from) %in% formula$getsVars)]
-#     }else{
-#       from <- from[from_new, , drop = FALSE]
-#     }
-#   }
-#
-#   if(isTRUE(na.remove))
-#   {
-#     from <- na.omit(from)
-#   }
-#
-#   class(from) <- class(from)
-#   return(from)
-#
-# }
-#

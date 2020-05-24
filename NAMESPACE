@@ -4,7 +4,7 @@
 
 importFrom("utils", "packageVersion")
 
-import("stats", "formula.tools", "magrittr")
+import("stats", "formula.tools")
 
 export("add","remove","rename","select","transform")
 

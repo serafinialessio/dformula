@@ -1,4 +1,4 @@
-remove <- function(from, formula, na.remove = FALSE, ...)
+remove <- function(from, formula = .~., na.remove = FALSE, ...)
 {
 
 
