@@ -1,0 +1,17 @@
+.DS_Store
+.Rhistory
+.travis.yml
+^misc$
+aux$
+log$
+^\.Rproj\.user$
+^.*\.Rproj$
+^Makefile$
+^revdep$
+^cran-comments\.md$
+^docs$
+^pkgdown$
+^cran-comments\.md$
+LICENSE
+README
+^codecov\.yml$
