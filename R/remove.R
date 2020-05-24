@@ -18,9 +18,7 @@ remove <- function(from, formula = .~., na.remove = FALSE, ...)
 
 
   if(any(rhs(formula$getsTransf) == "."))
-    #if(is.null(formula$getsVars) & any(rhs(formula$getsTransf) == "."))
   {
-    #warning("'.' are not allowd in the formula. The original data are returned.")
     from_new <- rep(TRUE,nrow(from))
   }else{
     from_new <- model.frame(formula = formula$getsTransf, data = from,

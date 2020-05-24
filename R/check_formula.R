@@ -44,7 +44,6 @@ check_formula <- function(formula)
       check <- NA
       for(i in lhV)
       {
-        #nch <- nchar(i)
         check <- (substring(i,1,2) == "I(")
 
         if(check)
@@ -99,7 +98,6 @@ check_formula_names <- function(formula)
   {
 
     lhs(formula) <- quote(NULL)
-    #stop("'.' together with names in the left side of the formula are not allowed.", call. = FALSE)
   }
 
   ##### Right
@@ -110,7 +108,7 @@ check_formula_names <- function(formula)
   if(is.null(rh))
   {
     rhs(formula) <- quote(.)
-    #stop("NULL values are not allowed. Please indicate the names of the new varaibles in the right end of the formula.", call = FALSE)
+
 
   }else if(any(rhC == "."))
   {
@@ -130,7 +128,6 @@ if(!is.null(lhs(formula)) | !rhs(formula)  == ".")
       check <- NA
       for(i in lhV)
       {
-        #nch <- nchar(i)
         check <- (substring(i,1,2) == "I(")
 
         if(check)
@@ -150,7 +147,6 @@ if(!is.null(lhs(formula)) | !rhs(formula)  == ".")
     check <- NA
     for(i in rhV)
     {
-      #nch <- nchar(i)
       check <- (substring(i,1,2) == "I(")
 
       if(check)
@@ -255,7 +251,6 @@ check_formula_add <- function(formula, from)
       nch <- nchar(i)
       check[count] <- (substring(i,1,2) == "C(")
 
-      #check <- (substring(i,1,2) == "I(" & substring(i,nch,nch) == ")")
 
       if(check[count])
       {
@@ -274,21 +269,18 @@ check_formula_add <- function(formula, from)
       getsVars <- colNames
 
       formula <- as.formula(paste("~", paste(rhV,collapse="+"),sep = ""))
-      #rhV <- rhs.vars(formula)
 
     }else{
       colNames <- (lhs.vars(formula))
       getsVars <- lhs.vars(formula)
 
       formula <- as.formula(paste("~", paste(rhV,collapse="+"),sep = ""))
-      #rhV <- rhs.vars(formula)
 
     }
 
     count <- length(rhV)
     err <- NULL
 
-    #if(length(colNames) != count & count == 1)
       if(count == 1)
 
     {
@@ -399,7 +391,7 @@ check_formula_transf <- function(formula, from)
       check <- NA
       for(i in lhV)
       {
-        #nch <- nchar(i)
+
         check <- (substring(i,1,2) == "I(")
 
         if(check)
@@ -422,7 +414,7 @@ check_formula_transf <- function(formula, from)
     rhV <- rhs.vars(formula)
 
     check <- rep(NA,length(rhV))
-    #
+
 
 
     for(i in rhV)
@@ -431,8 +423,6 @@ check_formula_transf <- function(formula, from)
       count <-  count + 1
       nch <- nchar(i)
       check[count] <- (substring(i,1,2) == "C(")
-
-      #check <- (substring(i,1,2) == "I(" & substring(i,nch,nch) == ")")
 
       if(check[count])
       {
@@ -451,21 +441,18 @@ check_formula_transf <- function(formula, from)
       getsVars <- colNames
 
       formula <- as.formula(paste("~", paste(rhV,collapse="+"),sep = ""))
-      #rhV <- rhs.vars(formula)
 
     }else{
       colNames <- (lhs.vars(formula))
       getsVars <- lhs.vars(formula)
 
       formula <- as.formula(paste("~", paste(rhV,collapse="+"),sep = ""))
-      #rhV <- rhs.vars(formula)
 
     }
 
     count <- length(rhV)
     err <- NULL
 
-    #if(length(colNames) != count & count == 1)
     if(count == 1)
 
     {
@@ -491,13 +478,6 @@ check_formula_transf <- function(formula, from)
 
   if(is.list(err))
   {
-
-    # if(count == 1 & isTRUE(check[1]) & !is.null(getsVars))
-    # {
-    #   model_frame <- matrix(err[[1]], ncol = length(getsVars), nrow = nrow(from), byrow = FALSE)
-    # }else{
-    #   model_frame <- matrix(err[[1]], ncol = 1, nrow = nrow(from), byrow = FALSE)
-    # }
 
     model_frame <- matrix(err[[1]], ncol = length(getsVars), nrow = nrow(from), byrow = FALSE)
 
@@ -530,7 +510,6 @@ lh_formula_internal <- function(Lnames, rhs_vars)
   lh <- paste(Lnames, collapse = "+")
 
   ncfunc <- nchar(rhs_vars)
-  #substring(rhs_vars,ncfunc,ncfunc)
 
   if(substring(rhs_vars,1,2) == "I(")
   {
@@ -585,6 +564,5 @@ constant <- function(x, nr,...)
   {
     x <- rep(x, nr)
   }
-  #if(missing(x)){stop(" ",call. = FALSE)}
   return(x)
 }

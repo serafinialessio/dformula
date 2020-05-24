@@ -35,17 +35,7 @@ transform <- function(from, formula, as = NULL,
     stop("Number of transformations must be equal to number of variables to transform", call. = FALSE)
   }
 
-  # whc <- formula$getsVars
-  # if(!is.null(formula$getsVars))
-  # {
-  #   whc <- colnames(from)
-  # }
-  #
-  #
-  # from_new <- model.frame(formula = formula$getsTransf, data = from[whc],
-  #                         drop.unused.levels = FALSE, na.action = NULL,...)
-  # from_new <- as.matrix(from_new)
-  from_new <- as.matrix(formula$model_frame)
+   from_new <- as.matrix(formula$model_frame)
 
   if(isTRUE(logic_convert))
   {
