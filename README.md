@@ -7,6 +7,7 @@
 ```
 [![Last Commit](https://img.shields.io/github/last-commit/dataallaround/dformula)](https://github.com/dataallaround/dformula)  
 ```
+[![DOI](https://zenodo.org/badge/260250976.svg)](https://zenodo.org/badge/latestdoi/260250976)
 
 A tool for manipulating data using the generic R function `formula`.
 
