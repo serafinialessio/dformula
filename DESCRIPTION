@@ -1,7 +1,7 @@
 Package: dformula
 Type: Package
-Version: 0.1
-Date: 2020-06-01
+Version: 1.0
+Date: 2023-12-01
 Title: Data Manipulation using Formula
 Description: A tool for manipulating data using the generic formula. A single formula allows to easily add, replace and remove variables before running the analysis. 
 Authors@R: c(person("Alessio", "Serafini", role = c("aut", "cre"),
@@ -13,8 +13,8 @@ Suggests:  knitr, rmarkdown
 VignetteBuilder: knitr
 License: GPL (>= 2)
 Repository: CRAN
-URL: https://github.com/dataallaround/dformula
-BugReports: https://github.com/dataallaround/dformula/issues
+URL: https://github.com/serafinialessio/dformula
+BugReports: https://github.com/serafinialessio/dformula/issues
 NeedsCompilation: no
 Encoding: UTF-8
 LazyData: true
