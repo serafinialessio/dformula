@@ -291,7 +291,7 @@ check_formula_add <- function(formula, from)
 
       err <- try(eval(vars, from, env), silent = TRUE)
 
-      if(class(err) == "try-error")
+      if(inherits(err, "try-error"))
       {
         formula <- lh_formula_internal(Lnames = colNames, rhs_vars = rhV)
       }
@@ -463,7 +463,7 @@ check_formula_transf <- function(formula, from)
 
       err <- try(eval(vars, from, env), silent = TRUE)
 
-      if(class(err) == "try-error")
+      if(inherits(err, "try-error"))
       {
         formula <- lh_formula_internal(Lnames = colNames, rhs_vars = rhV)
       }
