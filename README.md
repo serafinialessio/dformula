@@ -20,7 +20,7 @@ Development verison
 
 ```r
 library(remotes)
-install_github("dataallaround/dformula")
+install_github("serafinialessio/dformula")
 ```
 
 Usage
