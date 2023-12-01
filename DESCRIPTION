@@ -9,11 +9,11 @@ Authors@R: c(person("Alessio", "Serafini", role = c("aut", "cre"),
                     email = "srf.alessio@gmail.com"))
 Depends: R (>= 3.5.0)
 Imports: utils, stats, formula.tools(>= 1.7.1)
-Suggests:  knitr, rmarkdown
+Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 License: GPL (>= 2)
 Repository: CRAN
-URL: https://github.com/serafinialessio/dformula
+URL: https://github.com/serafinialessio/dformula, https://serafinialessio.github.io/dformula/
 BugReports: https://github.com/serafinialessio/dformula/issues
 NeedsCompilation: no
 Encoding: UTF-8
