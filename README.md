@@ -4,6 +4,7 @@
 [![Downloads](http://cranlogs.r-pkg.org/badges/dformula?color=brightgreen)](http://www.r-pkg.org/pkg/dformula)
 [![DOI](https://zenodo.org/badge/260250976.svg)](https://zenodo.org/badge/latestdoi/260250976)
 [![R-CMD-check](https://github.com/serafinialessio/dformula/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/serafinialessio/dformula/actions/workflows/R-CMD-check.yaml)
+
 A tool for manipulating data using the generic R function `formula`.
 
 
