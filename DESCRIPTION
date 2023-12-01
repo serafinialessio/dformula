@@ -13,7 +13,7 @@ Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 License: GPL (>= 2)
 Repository: CRAN
-URL: https://github.com/serafinialessio/dformula, https://serafinialessio.github.io/dformula/
+URL: https://serafinialessio.github.io/dformula/
 BugReports: https://github.com/serafinialessio/dformula/issues
 NeedsCompilation: no
 Encoding: UTF-8
