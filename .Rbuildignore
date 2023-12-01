@@ -16,3 +16,4 @@ log$
 LICENSE
 README
 ^codecov\.yml$
+^\.github$
