@@ -6,3 +6,4 @@
 
 - Change some parameters
 - Fix Vignette
+- Fix check_formula

@@ -61,7 +61,7 @@ library('dformula')
 or the development version from GitHub:
 
 ```{r, message = FALSE, eval=FALSE}
-remotes::install_github('dataallaround/dformula')
+remotes::install_github('serafinialessio/dformula')
 ```
 
 The data are available in the package will be used in this overview
@@ -71,7 +71,7 @@ data("population_data")
 pop_data <- population_data
 ```
 
-which describes the **Population** and **Area** of world countries. 
+which describes the **Population** and **Area** of world countries 
 
 ```{r}
 str(pop_data)
@@ -112,14 +112,14 @@ new_pop <- add(from = pop_data, formula = ~ I(Population / Area) + I(log(Area)),
 head(new_pop)
 ```
 
-If we have one transformation applied to a group of variables, we do not spicify the function multipe times
+If we have one transformation applied to a group of variables, we do not specify the function multiple times
 
 ```{r}
 new_pop <- add(from = pop_data, formula = Population + Area ~ log())
 head(new_pop)
 ```
 
-and with names
+and with new column names
 
 ```{r}
 new_pop <- add(from = pop_data, formula = Population + Area ~ log(),
@@ -127,7 +127,7 @@ new_pop <- add(from = pop_data, formula = Population + Area ~ log(),
 head(new_pop)
 ```
 
-Suppose we want tp add a numerical **id** for the countries at the beginning of the dataset, using the `position` argument
+Suppose we want to add a numerical **id** for the countries at the beginning of the dataset, using the `position` argument
 
 ```{r}
 new_pop <- add(from = pop_data, 
@@ -136,8 +136,7 @@ new_pop <- add(from = pop_data,
 head(new_pop)
 ```
 
-
-We can also add a constant variable, for example the year of the observation
+We can also add a constant variable. For example the year of the observation
 
 ```{r}
 new_pop <- add(from = pop_data, formula = ~ C("2020"), position = "left")
@@ -153,11 +152,10 @@ new_pop <- add(from = pop_data,
 head(new_pop)
 ```
 
-The `C()` construct, add a constant for all the rows
+The `C()` construct add a constant for all the rows
 
-
-
-We can be interested in having a dummy variable, i.e. a variable equal to $1$ if some event happen or $0$ otherwise. For example, we suppose to build a dummy variables with the most populated countries, for example countries with more than $100$ million of people.
+We can be interested in having a dummy variable, i.e. a variable equal to $1$ if some event happen or $0$ otherwise. 
+For example, we suppose to build a dummy variables with the most populated countries. In this we suppose countries with more than $100$ million of people.
 
 ```{r}
 new_pop <- add(from = pop_data, formula =  ~ I(Population > 100000000))
@@ -182,7 +180,7 @@ head(new_pop)
 
 ```
 
-If we want obtain a boolean vector, as an interrogation,  setting to `TRUE` the argument `logic_convert` the unction will return a boolean vector
+If we want obtain a boolean vector, as an interrogation,  setting to `TRUE` the argument `logic_convert` the function will return a boolean vector
 
 ```{r}
 new_pop <- add(from = pop_data, 
@@ -213,7 +211,7 @@ new_pop <- transform(from = pop_data,
 head(new_pop)
 ```
 
-With a single formula, multiple variables can be transformed, as showed before.
+With a single formula multiple variables can be transformed, as showed before.
 
 ```{r}
 new_pop <- transform(from = pop_data, 
@@ -221,7 +219,7 @@ new_pop <- transform(from = pop_data,
 head(new_pop)
 ```
 
-We can also transformed multiple varaible with multiple transformation 
+We can also transformed multiple variables with multiple transformations 
 
 ```{r}
 new_pop <- transform(from = pop_data, 
@@ -231,7 +229,7 @@ head(new_pop)
 
 
 
-## `Rename` varaibles
+## `Rename` variables
 
 The `rename()` function may be used to change names of existing variables, for example
 
@@ -252,7 +250,7 @@ head(new_pop)
 
 In the same fashion of SQL, the `select()` function first select the rows, given a statement, and then shows the select variables.
 
-The first part of the formula are the columns to select, as the previous functions, and the left-hand side of the formula, the condition part, will select the rows.
+The first part of the formula are the columns to select, as the previous functions, and the right-hand side of the formula, the condition part, will select the rows.
 
 Suppose to want to select only the most populated countries
 
@@ -298,7 +296,7 @@ head(new_pop)
 ```
 
 
-## `Remove` varaibles
+## `Remove` variables
 
 The `remove()` function has the same syntax of `select()` function, but now the rows and columns will be removed.
 
@@ -311,10 +309,10 @@ head(new_pop)
 ```
 
 
-## Missing values 
+## Handling Missing Values 
 
 
-In all the functions, except for `rename`, the argument `na.remove`, remove all the rows with missing values, after adding, transforming or selecting the rows.
+In all the functions, except for `rename`, the argument `na.remove` will remove all the rows with missing values, after adding, transforming or selecting the rows.
 
 The `remove` function, can be employed to remove all the rows with at least a missing observation,
 
@@ -327,7 +325,7 @@ head(dt_new)
 ```
 
 
-If we are interested to focus on the observation with missing values,  the `na.return = TRUE` arguments  of `select` function, will return only the incomplete rows after the selection
+If we are interested to focus on the observation with missing values, the `na.return = TRUE` arguments  of `select` function will return only the incomplete rows after the selection
 
 ```{r}
 dt_new <- select(from = dt,formula = ~ I(Temp > 50), na.return = TRUE)
