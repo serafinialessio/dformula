@@ -3,7 +3,7 @@ pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
   An-overview: An-overview.html
-last_built: 2024-08-03T04:16Z
+last_built: 2024-08-03T04:19Z
 urls:
   reference: https://serafinialessio.github.io/dformula/reference
   article: https://serafinialessio.github.io/dformula/articles
