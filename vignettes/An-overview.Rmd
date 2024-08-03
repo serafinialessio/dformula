@@ -1,11 +1,10 @@
 ---
-title: "An overview on *dformula*"
+title: "An overview on dformula"
 output: 
   rmarkdown::html_vignette:
-    keep_md: true 
     toc: true
 vignette: >
-  %\VignetteIndexEntry{An overview}
+  %\VignetteIndexEntry{An overview on dformula}
   %\VignetteEngine{knitr::rmarkdown}
   %\usepackage[utf8]{inputenc}
 ---
